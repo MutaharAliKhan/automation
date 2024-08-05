@@ -1,0 +1,11 @@
+customer_number,account_type,run_number,check_digit,branch_code,account_balance,username,password
+11223,Savings,005,6,005,1800.00,testing1,testing1
+33445,Checking,006,8,006,320.00,testing1,testing1
+55667,Savings,007,2,007,2500.00,testing1,testing1
+77889,Checking,008,5,008,150.00,testing1,testing1
+99001,Savings,009,4,009,3000.00,testing1,testing1
+22334,Checking,010,7,010,275.00,testing1,testing1
+44556,Savings,011,9,011,2200.00,testing1,testing1
+66778,Checking,012,1,012,500.00,testing1,testing1
+88990,Savings,013,3,013,1900.00,testing1,testing1
+10011,Checking,014,6,014,420.00,testing1,testing1

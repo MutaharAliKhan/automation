@@ -1,0 +1,11 @@
+customer_number,account_type,run_number,check_digit,branch_code,account_balance_x,username,password,account_balance_y,customer_name_x,customer_email_x,account_balance,customer_name_y,customer_email_y,transaction_amount
+11223,Savings,005,6,005,1800.00,testing1,testing1,1800.00,Alice Johnson,alice.johnson@example.com,1800.00,Alice Johnson,alice.johnson@example.com,
+33445,Checking,006,8,006,320.00,testing1,testing1,320.00,Michael Davis,michael.davis@example.com,320.00,Michael Davis,michael.davis@example.com,
+55667,Savings,007,2,007,2500.00,testing1,testing1,2500.00,Emily Wilson,emily.wilson@example.com,2500.00,Emily Wilson,emily.wilson@example.com,
+77889,Checking,008,5,008,150.00,testing1,testing1,150.00,David Lee,david.lee@example.com,150.00,David Lee,david.lee@example.com,
+99001,Savings,009,4,009,3000.00,testing1,testing1,3000.00,Susan Clark,susan.clark@example.com,3000.00,Susan Clark,susan.clark@example.com,
+22334,Checking,010,7,010,275.00,testing1,testing1,275.00,James Martinez,james.martinez@example.com,275.00,James Martinez,james.martinez@example.com,
+44556,Savings,011,9,011,2200.00,testing1,testing1,2200.00,Jessica Taylor,jessica.taylor@example.com,2200.00,Jessica Taylor,jessica.taylor@example.com,
+66778,Checking,012,1,012,500.00,testing1,testing1,500.00,William Anderson,william.anderson@example.com,500.00,William Anderson,william.anderson@example.com,
+88990,Savings,013,3,013,1900.00,testing1,testing1,1900.00,Olivia Thompson,olivia.thompson@example.com,1900.00,Olivia Thompson,olivia.thompson@example.com,
+10011,Checking,014,6,014,420.00,testing1,testing1,420.00,Daniel Robinson,daniel.robinson@example.com,420.00,Daniel Robinson,daniel.robinson@example.com,
