@@ -1,0 +1,2 @@
+customer_number,account_type,run_number,check_digit,account_balance_x
+12345,Savings,001,9,50000
