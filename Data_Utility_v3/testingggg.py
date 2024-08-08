@@ -2,6 +2,7 @@ import ast
 import astor
 import os
 
+
 class ParamReplacer(ast.NodeTransformer):
     def __init__(self, params):
         self.params = params
@@ -95,15 +96,22 @@ def extract_comments(script_content):
 
 
 def reinsert_comments(script_content, comments):
-    original_lines = script_content.splitlines(keepends=True)
-    new_lines = original_lines.copy()
+    lines = script_content.splitlines(keepends=True)
+    sorted_comments = sorted(comments.items())
 
-    # Insert comments before the lines where they originally appeared
-    for index, line in comments.items():
-        if index < len(new_lines):
-            new_lines.insert(index, line)
-        else:
-            new_lines.append(line)  # in case the comment index is beyond the current line count
+    new_lines = []
+    comment_index = 0
+
+    for i, line in enumerate(lines):
+        while comment_index < len(sorted_comments) and sorted_comments[comment_index][0] <= i:
+            new_lines.append(sorted_comments[comment_index][1])
+            comment_index += 1
+        new_lines.append(line)
+
+    # Add any remaining comments (in case there are more comments than lines)
+    while comment_index < len(sorted_comments):
+        new_lines.append(sorted_comments[comment_index][1])
+        comment_index += 1
 
     return ''.join(new_lines)
 
