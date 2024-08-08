@@ -34,3 +34,6 @@ def replace_fill_arguments(file_path, headers):
     # Write the updated code back to the file
     with open(file_path, 'w') as file:
         file.write(updated_code)
+
+# Usage example
+replace_fill_arguments('path/to/your/script.py', ['param1', 'param2', 'param3'])
