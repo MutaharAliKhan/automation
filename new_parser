@@ -1,0 +1,36 @@
+import re
+
+def replace_fill_arguments(file_path, headers):
+    with open(file_path, 'r') as file:
+        code = file.read()
+
+    # Define the pattern to match .fill() method calls with arguments
+    fill_pattern = re.compile(r'\.fill\(([^)]+)\)', re.DOTALL)
+
+    header_index = 0
+
+    def replace_arguments(match):
+        nonlocal header_index
+
+        if header_index >= len(headers):
+            return match.group(0)  # No more headers to use
+
+        args = match.group(1).strip()
+        
+        if ',' in args:
+            first_arg, second_arg = args.split(',', 1)
+            first_arg = first_arg.strip()
+            new_second_arg = f'str({headers[header_index]})'
+            header_index += 1
+            return f'.fill({first_arg}, {new_second_arg})'
+        else:
+            new_arg = f'str({headers[header_index]})'
+            header_index += 1
+            return f'.fill({new_arg})'
+
+    # Replace the .fill() arguments using the defined pattern and replacement function
+    updated_code = fill_pattern.sub(replace_arguments, code)
+
+    # Write the updated code back to the file
+    with open(file_path, 'w') as file:
+        file.write(updated_code)
