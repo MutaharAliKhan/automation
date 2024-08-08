@@ -65,33 +65,23 @@ def replace_hardcoded_values_with_params(script_content, params):
 
 def extract_comments(script_content):
     comments = {}
-    lines = script_content.splitlines(keepends=True)
     tokens = tokenize.tokenize(BytesIO(script_content.encode('utf-8')).readline)
 
     for token in tokens:
         if token.type == tokenize.COMMENT:
-            lineno = token.start[0] - 1
-            comments[lineno] = token.line
+            comments[token.start[0] - 1] = token.line
 
     return comments
 
 def reinsert_comments(script_content, comments):
     lines = script_content.splitlines(keepends=True)
-    sorted_comments = sorted(comments.items())
-
     new_lines = []
-    comment_index = 0
 
     for i, line in enumerate(lines):
-        while comment_index < len(sorted_comments) and sorted_comments[comment_index][0] <= i:
-            new_lines.append(sorted_comments[comment_index][1])
-            comment_index += 1
+        # Add the comment above the relevant line if it exists
+        if i in comments:
+            new_lines.append(comments[i] + '\n')
         new_lines.append(line)
-
-    # Add any remaining comments
-    while comment_index < len(sorted_comments):
-        new_lines.append(sorted_comments[comment_index][1])
-        comment_index += 1
 
     return ''.join(new_lines)
 
