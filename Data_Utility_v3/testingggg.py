@@ -1,7 +1,8 @@
 import ast
 import astor
 import os
-
+import tokenize
+from io import BytesIO
 
 class ParamReplacer(ast.NodeTransformer):
     def __init__(self, params):
@@ -22,7 +23,6 @@ class ParamReplacer(ast.NodeTransformer):
                 node.args[0] = ast.Name(id="base_url", ctx=ast.Load())
         return node
 
-
 class FillArgumentTransformer(ast.NodeTransformer):
     def visit_Call(self, node):
         if isinstance(node.func, ast.Attribute) and node.func.attr == 'fill':
@@ -33,7 +33,6 @@ class FillArgumentTransformer(ast.NodeTransformer):
                 if not (isinstance(node.args[0], ast.Call) and isinstance(node.args[0].func, ast.Name) and node.args[0].func.id == 'str'):
                     node.args[0] = ast.Call(func=ast.Name(id='str', ctx=ast.Load()), args=[node.args[0]], keywords=[])
         return node
-
 
 def extract_parametrize_params(script_content):
     tree = ast.parse(script_content)
@@ -50,7 +49,6 @@ def extract_parametrize_params(script_content):
                 params.extend(param_names)
     return params
 
-
 def extract_goto_urls(script_content):
     tree = ast.parse(script_content)
     urls = []
@@ -60,40 +58,22 @@ def extract_goto_urls(script_content):
                 urls.append(node.args[0].s)
     return urls
 
-
 def replace_hardcoded_values_with_params(script_content, params):
     tree = ast.parse(script_content)
     tree = ParamReplacer(params).visit(tree)
     return astor.to_source(tree)
 
-
 def extract_comments(script_content):
     comments = {}
     lines = script_content.splitlines(keepends=True)
+    tokens = tokenize.tokenize(BytesIO(script_content.encode('utf-8')).readline)
 
-    in_multiline_comment = False
-    multiline_comment_lines = []
-
-    for index, line in enumerate(lines):
-        stripped_line = line.strip()
-
-        if in_multiline_comment:
-            multiline_comment_lines.append(line)
-            if stripped_line.endswith("'''") or stripped_line.endswith('"""'):
-                comments[index] = ''.join(multiline_comment_lines)
-                in_multiline_comment = False
-                multiline_comment_lines = []
-        elif stripped_line.startswith("'''") or stripped_line.startswith('"""'):
-            if stripped_line.endswith("'''") or stripped_line.endswith('"""'):
-                comments[index] = line
-            else:
-                multiline_comment_lines.append(line)
-                in_multiline_comment = True
-        elif stripped_line.startswith('#'):
-            comments[index] = line
+    for token in tokens:
+        if token.type == tokenize.COMMENT:
+            lineno = token.start[0] - 1
+            comments[lineno] = token.line
 
     return comments
-
 
 def reinsert_comments(script_content, comments):
     lines = script_content.splitlines(keepends=True)
@@ -108,13 +88,12 @@ def reinsert_comments(script_content, comments):
             comment_index += 1
         new_lines.append(line)
 
-    # Add any remaining comments (in case there are more comments than lines)
+    # Add any remaining comments
     while comment_index < len(sorted_comments):
         new_lines.append(sorted_comments[comment_index][1])
         comment_index += 1
 
     return ''.join(new_lines)
-
 
 def transform_fill_arguments(file_path):
     try:
@@ -134,7 +113,6 @@ def transform_fill_arguments(file_path):
     except Exception as e:
         print(f"An error occurred: {e}")
         return False
-
 
 def process_script(file_path):
     try:
@@ -170,7 +148,6 @@ def process_script(file_path):
         print(f"Error processing {file_path}: {e}")
         return False
 
-
 def process_directory(dir_path):
     count = 0
     for root, _, files in os.walk(dir_path):
@@ -181,7 +158,6 @@ def process_directory(dir_path):
                     count += 1
 
     print(f"Total updated scripts count: {count}")
-
 
 if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
