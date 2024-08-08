@@ -1,8 +1,6 @@
 import ast
 import astor
 import os
-import re
-
 
 class ParamReplacer(ast.NodeTransformer):
     def __init__(self, params):
@@ -97,23 +95,15 @@ def extract_comments(script_content):
 
 
 def reinsert_comments(script_content, comments):
-    lines = script_content.splitlines(keepends=True)
-    comment_lines = [lines[idx] for idx in sorted(comments.keys())]
+    original_lines = script_content.splitlines(keepends=True)
+    new_lines = original_lines.copy()
 
-    # Create a new list of lines with comments reinserted
-    new_lines = []
-    comment_index = 0
-
-    for i, line in enumerate(lines):
-        if comment_index < len(comment_lines) and i == sorted(comments.keys())[comment_index]:
-            new_lines.append(comment_lines[comment_index])
-            comment_index += 1
-        new_lines.append(line)
-
-    # Add any remaining comments (in case there are more comments than lines)
-    while comment_index < len(comment_lines):
-        new_lines.append(comment_lines[comment_index])
-        comment_index += 1
+    # Insert comments before the lines where they originally appeared
+    for index, line in comments.items():
+        if index < len(new_lines):
+            new_lines.insert(index, line)
+        else:
+            new_lines.append(line)  # in case the comment index is beyond the current line count
 
     return ''.join(new_lines)
 
@@ -145,7 +135,7 @@ def process_script(file_path):
 
         # Extract comments before transformations
         comments = extract_comments(script_content)
-        
+
         # Extract parameters and URLs
         params = extract_parametrize_params(script_content)
         urls = extract_goto_urls(script_content)
@@ -156,10 +146,10 @@ def process_script(file_path):
         # Replace hardcoded values with parameters
         if params:
             updated_script_content = replace_hardcoded_values_with_params(script_content, params.copy())
-            
+
             # Reinsert comments into the updated script
             updated_script_content = reinsert_comments(updated_script_content, comments)
-            
+
             with open(file_path, 'w') as file:
                 file.write(updated_script_content)
 
