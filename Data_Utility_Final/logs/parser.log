@@ -1,0 +1,272 @@
+2024-08-09 03:04:46,279 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script1.py
+2024-08-09 03:04:46,283 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.csv
+2024-08-09 03:04:46,287 - ERROR - Error processing script D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script1.py: Invalid format specifier ' result' for object of type 'str'
+2024-08-09 03:04:46,287 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script2.py
+2024-08-09 03:04:46,288 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.csv
+2024-08-09 03:04:46,290 - ERROR - Error processing script D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script2.py: Invalid format specifier ' result' for object of type 'str'
+2024-08-09 03:04:46,290 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script3.py
+2024-08-09 03:04:46,292 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.csv
+2024-08-09 03:04:46,295 - ERROR - Error processing script D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script3.py: Invalid format specifier ' result' for object of type 'str'
+2024-08-09 03:04:46,296 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script4.py
+2024-08-09 03:04:46,297 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.csv
+2024-08-09 03:04:46,298 - ERROR - Error processing script D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script4.py: Invalid format specifier ' result' for object of type 'str'
+2024-08-09 03:04:46,298 - INFO - Scripts have been parsed, updated, and saved successfully.
+2024-08-09 03:04:46,298 - INFO - Total scripts generated: 4
+2024-08-09 03:04:46,298 - INFO - Total CSV files generated: 4
+
+2024-08-09 03:05:42,559 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script1.py
+2024-08-09 03:05:42,562 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.csv
+2024-08-09 03:05:42,567 - ERROR - Error processing script D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script1.py: Invalid format specifier ' result' for object of type 'str'
+2024-08-09 03:05:42,567 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script2.py
+2024-08-09 03:05:42,568 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.csv
+2024-08-09 03:05:42,570 - ERROR - Error processing script D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script2.py: Invalid format specifier ' result' for object of type 'str'
+2024-08-09 03:05:42,570 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script3.py
+2024-08-09 03:05:42,572 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.csv
+2024-08-09 03:05:42,575 - ERROR - Error processing script D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script3.py: Invalid format specifier ' result' for object of type 'str'
+2024-08-09 03:05:42,576 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script4.py
+2024-08-09 03:05:42,576 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.csv
+2024-08-09 03:05:42,578 - ERROR - Error processing script D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script4.py: Invalid format specifier ' result' for object of type 'str'
+2024-08-09 03:05:42,578 - INFO - Scripts have been parsed, updated, and saved successfully.
+2024-08-09 03:05:42,578 - INFO - Total scripts generated: 4
+2024-08-09 03:05:42,578 - INFO - Total CSV files generated: 4
+
+2024-08-09 03:07:00,963 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script1.py
+2024-08-09 03:07:00,967 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.csv
+2024-08-09 03:07:00,970 - INFO - Added method 'test_script1_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:07:00,971 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.py
+2024-08-09 03:07:00,971 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script2.py
+2024-08-09 03:07:00,972 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.csv
+2024-08-09 03:07:00,979 - INFO - Added method 'test_script2_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:07:00,980 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.py
+2024-08-09 03:07:00,980 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script3.py
+2024-08-09 03:07:00,981 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.csv
+2024-08-09 03:07:00,988 - INFO - Added method 'test_script3_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:07:00,989 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.py
+2024-08-09 03:07:00,989 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script4.py
+2024-08-09 03:07:00,990 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.csv
+2024-08-09 03:07:00,998 - INFO - Added method 'test_script4_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:07:00,998 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.py
+2024-08-09 03:07:00,998 - INFO - Scripts have been parsed, updated, and saved successfully.
+2024-08-09 03:07:00,998 - INFO - Total scripts generated: 4
+2024-08-09 03:07:00,998 - INFO - Total CSV files generated: 4
+
+2024-08-09 03:07:17,779 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script1.py
+2024-08-09 03:07:17,783 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.csv
+2024-08-09 03:07:17,787 - INFO - Added method 'test_script1_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:07:17,787 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.py
+2024-08-09 03:07:17,787 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script2.py
+2024-08-09 03:07:17,788 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.csv
+2024-08-09 03:07:17,798 - INFO - Added method 'test_script2_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:07:17,799 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.py
+2024-08-09 03:07:17,799 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script3.py
+2024-08-09 03:07:17,800 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.csv
+2024-08-09 03:07:17,808 - INFO - Added method 'test_script3_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:07:17,809 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.py
+2024-08-09 03:07:17,809 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script4.py
+2024-08-09 03:07:17,810 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.csv
+2024-08-09 03:07:17,816 - INFO - Added method 'test_script4_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:07:17,816 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.py
+2024-08-09 03:07:17,816 - INFO - Scripts have been parsed, updated, and saved successfully.
+2024-08-09 03:07:17,816 - INFO - Total scripts generated: 4
+2024-08-09 03:07:17,816 - INFO - Total CSV files generated: 4
+
+2024-08-09 03:07:44,188 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script1.py
+2024-08-09 03:07:44,192 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.csv
+2024-08-09 03:07:44,197 - INFO - Method 'test_script1_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:07:44,197 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.py
+2024-08-09 03:07:44,197 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script2.py
+2024-08-09 03:07:44,198 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.csv
+2024-08-09 03:07:44,200 - INFO - Method 'test_script2_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:07:44,201 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.py
+2024-08-09 03:07:44,201 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script3.py
+2024-08-09 03:07:44,203 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.csv
+2024-08-09 03:07:44,206 - INFO - Method 'test_script3_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:07:44,206 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.py
+2024-08-09 03:07:44,206 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script4.py
+2024-08-09 03:07:44,207 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.csv
+2024-08-09 03:07:44,209 - INFO - Method 'test_script4_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:07:44,209 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.py
+2024-08-09 03:07:44,209 - INFO - Scripts have been parsed, updated, and saved successfully.
+2024-08-09 03:07:44,209 - INFO - Total scripts generated: 4
+2024-08-09 03:07:44,209 - INFO - Total CSV files generated: 4
+
+2024-08-09 03:08:52,134 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script1.py
+2024-08-09 03:08:52,137 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.csv
+2024-08-09 03:08:52,142 - INFO - Added method 'test_script1_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:08:52,143 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.py
+2024-08-09 03:08:52,143 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script2.py
+2024-08-09 03:08:52,144 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.csv
+2024-08-09 03:08:52,151 - INFO - Added method 'test_script2_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:08:52,152 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.py
+2024-08-09 03:08:52,152 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script3.py
+2024-08-09 03:08:52,153 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.csv
+2024-08-09 03:08:52,161 - INFO - Added method 'test_script3_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:08:52,162 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.py
+2024-08-09 03:08:52,162 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script4.py
+2024-08-09 03:08:52,163 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.csv
+2024-08-09 03:08:52,170 - INFO - Added method 'test_script4_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:08:52,170 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.py
+2024-08-09 03:08:52,170 - INFO - Scripts have been parsed, updated, and saved successfully.
+2024-08-09 03:08:52,170 - INFO - Total scripts generated: 4
+2024-08-09 03:08:52,170 - INFO - Total CSV files generated: 4
+
+2024-08-09 03:09:19,276 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script1.py
+2024-08-09 03:09:19,279 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.csv
+2024-08-09 03:09:19,284 - INFO - Method 'test_script1_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:09:19,284 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.py
+2024-08-09 03:09:19,284 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script2.py
+2024-08-09 03:09:19,285 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.csv
+2024-08-09 03:09:19,287 - INFO - Method 'test_script2_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:09:19,288 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.py
+2024-08-09 03:09:19,288 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script3.py
+2024-08-09 03:09:19,289 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.csv
+2024-08-09 03:09:19,293 - INFO - Method 'test_script3_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:09:19,293 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.py
+2024-08-09 03:09:19,293 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script4.py
+2024-08-09 03:09:19,294 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.csv
+2024-08-09 03:09:19,296 - INFO - Method 'test_script4_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:09:19,296 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.py
+2024-08-09 03:09:19,297 - INFO - Scripts have been parsed, updated, and saved successfully.
+2024-08-09 03:09:19,297 - INFO - Total scripts generated: 4
+2024-08-09 03:09:19,297 - INFO - Total CSV files generated: 4
+
+2024-08-09 03:09:23,479 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script1.py
+2024-08-09 03:09:23,483 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.csv
+2024-08-09 03:09:23,486 - INFO - Method 'test_script1_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:09:23,487 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.py
+2024-08-09 03:09:23,487 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script2.py
+2024-08-09 03:09:23,488 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.csv
+2024-08-09 03:09:23,490 - INFO - Method 'test_script2_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:09:23,491 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.py
+2024-08-09 03:09:23,491 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script3.py
+2024-08-09 03:09:23,492 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.csv
+2024-08-09 03:09:23,495 - INFO - Method 'test_script3_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:09:23,495 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.py
+2024-08-09 03:09:23,496 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script4.py
+2024-08-09 03:09:23,496 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.csv
+2024-08-09 03:09:23,498 - INFO - Method 'test_script4_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:09:23,498 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.py
+2024-08-09 03:09:23,498 - INFO - Scripts have been parsed, updated, and saved successfully.
+2024-08-09 03:09:23,498 - INFO - Total scripts generated: 4
+2024-08-09 03:09:23,498 - INFO - Total CSV files generated: 4
+
+2024-08-09 03:09:26,168 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script1.py
+2024-08-09 03:09:26,172 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.csv
+2024-08-09 03:09:26,176 - INFO - Method 'test_script1_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:09:26,176 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.py
+2024-08-09 03:09:26,177 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script2.py
+2024-08-09 03:09:26,178 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.csv
+2024-08-09 03:09:26,180 - INFO - Method 'test_script2_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:09:26,180 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.py
+2024-08-09 03:09:26,180 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script3.py
+2024-08-09 03:09:26,181 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.csv
+2024-08-09 03:09:26,184 - INFO - Method 'test_script3_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:09:26,185 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.py
+2024-08-09 03:09:26,185 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script4.py
+2024-08-09 03:09:26,186 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.csv
+2024-08-09 03:09:26,188 - INFO - Method 'test_script4_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:09:26,188 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.py
+2024-08-09 03:09:26,188 - INFO - Scripts have been parsed, updated, and saved successfully.
+2024-08-09 03:09:26,188 - INFO - Total scripts generated: 4
+2024-08-09 03:09:26,188 - INFO - Total CSV files generated: 4
+
+2024-08-09 03:09:28,179 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script1.py
+2024-08-09 03:09:28,183 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.csv
+2024-08-09 03:09:28,186 - INFO - Method 'test_script1_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:09:28,187 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.py
+2024-08-09 03:09:28,187 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script2.py
+2024-08-09 03:09:28,188 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.csv
+2024-08-09 03:09:28,190 - INFO - Method 'test_script2_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:09:28,190 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.py
+2024-08-09 03:09:28,190 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script3.py
+2024-08-09 03:09:28,192 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.csv
+2024-08-09 03:09:28,195 - INFO - Method 'test_script3_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:09:28,195 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.py
+2024-08-09 03:09:28,196 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script4.py
+2024-08-09 03:09:28,196 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.csv
+2024-08-09 03:09:28,198 - INFO - Method 'test_script4_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:09:28,198 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.py
+2024-08-09 03:09:28,198 - INFO - Scripts have been parsed, updated, and saved successfully.
+2024-08-09 03:09:28,199 - INFO - Total scripts generated: 4
+2024-08-09 03:09:28,199 - INFO - Total CSV files generated: 4
+
+2024-08-09 03:15:09,456 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script1.py
+2024-08-09 03:15:09,460 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.csv
+2024-08-09 03:15:09,463 - INFO - Method 'test_script1_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:15:09,464 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.py
+2024-08-09 03:15:09,464 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script2.py
+2024-08-09 03:15:09,465 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.csv
+2024-08-09 03:15:09,468 - INFO - Method 'test_script2_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:15:09,468 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.py
+2024-08-09 03:15:09,468 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script3.py
+2024-08-09 03:15:09,469 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.csv
+2024-08-09 03:15:09,473 - INFO - Method 'test_script3_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:15:09,473 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.py
+2024-08-09 03:15:09,473 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script4.py
+2024-08-09 03:15:09,474 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.csv
+2024-08-09 03:15:09,476 - INFO - Method 'test_script4_data' already exists in D:\MyRecentProjects\Data_Utility\database\database_operations.py.
+2024-08-09 03:15:09,476 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.py
+2024-08-09 03:15:09,476 - INFO - Scripts have been parsed, updated, and saved successfully.
+2024-08-09 03:15:09,476 - INFO - Total scripts generated: 4
+2024-08-09 03:15:09,476 - INFO - Total CSV files generated: 4
+
+2024-08-09 03:15:41,136 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script1.py
+2024-08-09 03:15:41,139 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.csv
+2024-08-09 03:15:41,145 - INFO - Added method 'test_script1_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:15:41,145 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.py
+2024-08-09 03:15:41,145 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script2.py
+2024-08-09 03:15:41,146 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.csv
+2024-08-09 03:15:41,153 - INFO - Added method 'test_script2_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:15:41,154 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.py
+2024-08-09 03:15:41,154 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script3.py
+2024-08-09 03:15:41,155 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.csv
+2024-08-09 03:15:41,163 - INFO - Added method 'test_script3_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:15:41,163 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.py
+2024-08-09 03:15:41,163 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script4.py
+2024-08-09 03:15:41,164 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.csv
+2024-08-09 03:15:41,171 - INFO - Added method 'test_script4_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:15:41,171 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.py
+2024-08-09 03:15:41,171 - INFO - Scripts have been parsed, updated, and saved successfully.
+2024-08-09 03:15:41,171 - INFO - Total scripts generated: 4
+2024-08-09 03:15:41,171 - INFO - Total CSV files generated: 4
+
+2024-08-09 03:16:41,334 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script1.py
+2024-08-09 03:16:41,338 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.csv
+2024-08-09 03:16:41,342 - INFO - Added method 'test_script1_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:16:41,342 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.py
+2024-08-09 03:16:41,343 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script2.py
+2024-08-09 03:16:41,344 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.csv
+2024-08-09 03:16:41,351 - INFO - Added method 'test_script2_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:16:41,351 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.py
+2024-08-09 03:16:41,351 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script3.py
+2024-08-09 03:16:41,352 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.csv
+2024-08-09 03:16:41,360 - INFO - Added method 'test_script3_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:16:41,360 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.py
+2024-08-09 03:16:41,360 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script4.py
+2024-08-09 03:16:41,361 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.csv
+2024-08-09 03:16:41,368 - INFO - Added method 'test_script4_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:16:41,368 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.py
+2024-08-09 03:16:41,368 - INFO - Scripts have been parsed, updated, and saved successfully.
+2024-08-09 03:16:41,368 - INFO - Total scripts generated: 4
+2024-08-09 03:16:41,368 - INFO - Total CSV files generated: 4
+
+2024-08-09 03:20:53,594 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script1.py
+2024-08-09 03:20:53,598 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.csv
+2024-08-09 03:20:53,602 - INFO - Added method 'test_script1_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:20:53,602 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script1.py
+2024-08-09 03:20:53,602 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script2.py
+2024-08-09 03:20:53,604 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.csv
+2024-08-09 03:20:53,612 - INFO - Added method 'test_script2_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:20:53,612 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script2.py
+2024-08-09 03:20:53,612 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script3.py
+2024-08-09 03:20:53,613 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.csv
+2024-08-09 03:20:53,622 - INFO - Added method 'test_script3_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:20:53,622 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script3.py
+2024-08-09 03:20:53,622 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\recorded_scripts\test_script4.py
+2024-08-09 03:20:53,623 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.csv
+2024-08-09 03:20:53,632 - INFO - Added method 'test_script4_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-09 03:20:53,632 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\updated_scripts\test_script4.py
+2024-08-09 03:20:53,632 - INFO - Scripts have been parsed, updated, and saved successfully.
+2024-08-09 03:20:53,632 - INFO - Total scripts generated: 4
+2024-08-09 03:20:53,632 - INFO - Total CSV files generated: 4
+
