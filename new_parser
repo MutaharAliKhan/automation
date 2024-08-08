@@ -1,16 +1,22 @@
+import re
+
 def replace_fill_arguments(file_path, headers):
     with open(file_path, 'r') as file:
         code = file.read()
 
     # Define the pattern to match .fill() method calls with arguments
     fill_pattern = re.compile(r'\.fill\(([^)]+)\)', re.DOTALL)
-
+    
     header_index = 0
 
     def replace_arguments(match):
         nonlocal header_index
-        print(f"Original match: {match.group(0)}")  # Debugging: print the original .fill() call
 
+        # Check if the match is already in the desired format
+        if 'str(' in match.group(0):
+            return match.group(0)  # Already processed
+
+        # Ensure we do not run out of headers
         if header_index >= len(headers):
             return match.group(0)  # No more headers to use
 
@@ -20,14 +26,11 @@ def replace_fill_arguments(file_path, headers):
             first_arg = first_arg.strip()
             new_second_arg = f'str({headers[header_index]})'
             header_index += 1
-            result = f'.fill({first_arg}, {new_second_arg})'
+            return f'.fill({first_arg}, {new_second_arg})'
         else:
             new_arg = f'str({headers[header_index]})'
             header_index += 1
-            result = f'.fill({new_arg})'
-
-        print(f"Replacement result: {result}")  # Debugging: print the replacement result
-        return result
+            return f'.fill({new_arg})'
 
     # Replace the .fill() arguments using the defined pattern and replacement function
     updated_code = fill_pattern.sub(replace_arguments, code)
@@ -35,3 +38,6 @@ def replace_fill_arguments(file_path, headers):
     # Write the updated code back to the file
     with open(file_path, 'w') as file:
         file.write(updated_code)
+
+# Usage example
+replace_fill_arguments('path/to/your/script.py', ['param1', 'param2', 'param3'])
