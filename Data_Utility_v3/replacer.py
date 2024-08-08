@@ -85,18 +85,33 @@ def transform_fill_arguments(file_path):
 def preserve_comments_and_docstrings(file_path, updated_code):
     with open(file_path, 'r') as file:
         tokens = tokenize.generate_tokens(file.readline)
+        
         new_code = []
         last_line = 0
+        
+        in_multiline_string = False
         for token_type, token_string, start, end, line in tokens:
             if token_type == tokenize.COMMENT:
                 new_code.append(f"# {token_string.strip()}\n")
-            elif token_type == tokenize.STRING and (start[1] == 0 or line.strip().startswith("'''") or line.strip().startswith('"""')):
-                new_code.append(token_string)
-            elif start[0] > last_line:
-                new_code.append('\n' * (start[0] - last_line - 1))
+            elif token_type == tokenize.STRING:
+                if (line.startswith("'''") or line.startswith('"""')) and not in_multiline_string:
+                    in_multiline_string = True
+                    new_code.append(token_string)
+                elif in_multiline_string and (line.endswith("'''") or line.endswith('"""')):
+                    in_multiline_string = False
+                    new_code.append(token_string)
+                elif in_multiline_string:
+                    new_code.append(token_string)
+                else:
+                    new_code.append(token_string)
+            elif token_type == tokenize.NEWLINE:
+                if start[0] > last_line:
+                    new_code.append('\n' * (start[0] - last_line - 1))
             last_line = start[0]
+            
             if token_type in [tokenize.NAME, tokenize.NUMBER, tokenize.OP]:
                 new_code.append(token_string)
+
         return ''.join(new_code).strip() + '\n'
 
 def process_script(file_path):
