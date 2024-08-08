@@ -182,3 +182,132 @@ if __name__ == "__main__":
     project_root = os.path.abspath(os.path.join(script_dir, '..'))
     directory_path = os.path.join(project_root, 'updated_scripts')
     process_directory(directory_path)
+
+
+
+
+
+
+
+
+
+import os
+import ast
+import astor
+
+class ParamReplacer(ast.NodeTransformer):
+    def __init__(self, params):
+        self.params = params
+
+    def visit_Call(self, node):
+        if isinstance(node.func, ast.Attribute):
+            if node.func.attr == 'fill':
+                if len(node.args) == 2 and isinstance(node.args[1], ast.Str):
+                    if self.params:
+                        param = self.params.pop(0)
+                        node.args[1] = ast.Call(func=ast.Name(id='str', ctx=ast.Load()), args=[ast.Name(id=param, ctx=ast.Load())], keywords=[])
+                elif len(node.args) == 1 and isinstance(node.args[0], ast.Str):
+                    if self.params:
+                        param = self.params.pop(0)
+                        node.args[0] = ast.Call(func=ast.Name(id='str', ctx=ast.Load()), args=[ast.Name(id=param, ctx=ast.Load())], keywords=[])
+            elif node.func.attr == 'goto':
+                node.args[0] = ast.Name(id="base_url", ctx=ast.Load())
+        return node
+
+def extract_params_and_comments(script_content):
+    comments = {}
+    params = []
+    lines = script_content.split('\n')
+    in_multiline_comment = False
+    multiline_comment_lines = []
+
+    for index, line in enumerate(lines):
+        stripped_line = line.strip()
+
+        if in_multiline_comment:
+            if stripped_line.endswith("'''") or stripped_line.endswith('"""'):
+                multiline_comment_lines.append(stripped_line)
+                comments[index + 1] = '\n'.join(multiline_comment_lines)
+                in_multiline_comment = False
+                multiline_comment_lines = []
+            else:
+                multiline_comment_lines.append(stripped_line)
+        elif stripped_line.startswith("'''") or stripped_line.startswith('"""'):
+            if stripped_line.endswith("'''") or stripped_line.endswith('"""'):
+                comments[index + 1] = stripped_line
+            else:
+                multiline_comment_lines.append(stripped_line)
+                in_multiline_comment = True
+        elif stripped_line.startswith('#'):
+            comments[index + 1] = stripped_line
+
+        # Extract parameters from pytest.mark.parametrize
+        if 'pytest.mark.parametrize' in stripped_line:
+            param_names = stripped_line.split('pytest.mark.parametrize')[1].split('(')[1].split(')')[0]
+            params.extend(param_names.strip().split(','))
+
+    return params, comments
+
+def reinsert_comments(script_lines, comments):
+    new_lines = []
+    comment_index = 1
+
+    for index, line in enumerate(script_lines):
+        while comment_index in comments and comment_index <= index + 1:
+            new_lines.append(comments[comment_index])
+            comment_index += 1
+        new_lines.append(line)
+
+    while comment_index in comments:
+        new_lines.append(comments[comment_index])
+        comment_index += 1
+
+    return new_lines
+
+def replace_hardcoded_values_with_params(script_content, params):
+    comments = extract_params_and_comments(script_content)[1]
+    script_lines = script_content.split('\n')
+
+    tree = ast.parse(script_content)
+    tree = ParamReplacer(params).visit(tree)
+    updated_script_content = astor.to_source(tree)
+
+    updated_script_lines = updated_script_content.split('\n')
+    updated_script_lines = reinsert_comments(updated_script_lines, comments)
+
+    return '\n'.join(updated_script_lines)
+
+def process_script(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            script_content = file.read()
+
+        params, _ = extract_params_and_comments(script_content)
+        updated_script = replace_hardcoded_values_with_params(script_content, params)
+
+        with open(file_path, 'w') as file:
+            file.write(updated_script)
+
+        print(f"Processed {file_path}")
+        return True
+
+    except Exception as e:
+        print(f"Error processing {file_path}: {e}")
+        return False
+
+def process_directory(dir_path):
+    count = 0
+    for root, _, files in os.walk(dir_path):
+        for file in files:
+            if file.endswith('.py'):
+                file_path = os.path.join(root, file)
+                if process_script(file_path):
+                    count += 1
+
+    print(f"Total updated scripts count: {count}")
+
+if __name__ == "__main__":
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.abspath(os.path.join(script_dir, '..'))
+    directory_path = os.path.join(project_root, 'updated_scripts')
+    process_directory(directory_path)
