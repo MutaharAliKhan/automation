@@ -82,7 +82,7 @@ def transform_fill_arguments(file_path):
         print(f"An error occurred: {e}")
         return False
 
-def preserve_comments(file_path, updated_code):
+def preserve_comments_and_docstrings(file_path, updated_code):
     with open(file_path, 'r') as file:
         tokens = tokenize.generate_tokens(file.readline)
         new_code = []
@@ -90,10 +90,12 @@ def preserve_comments(file_path, updated_code):
         for token_type, token_string, start, end, line in tokens:
             if token_type == tokenize.COMMENT:
                 new_code.append(f"# {token_string.strip()}\n")
+            elif token_type == tokenize.STRING and (start[1] == 0 or line.strip().startswith("'''") or line.strip().startswith('"""')):
+                new_code.append(token_string)
             elif start[0] > last_line:
                 new_code.append('\n' * (start[0] - last_line - 1))
             last_line = start[0]
-            if token_type in [tokenize.NAME, tokenize.NUMBER, tokenize.STRING, tokenize.OP]:
+            if token_type in [tokenize.NAME, tokenize.NUMBER, tokenize.OP]:
                 new_code.append(token_string)
         return ''.join(new_code).strip() + '\n'
 
@@ -110,7 +112,7 @@ def process_script(file_path):
 
         if params:
             updated_script_content = replace_hardcoded_values_with_params(script_content, params.copy())
-            updated_script_content = preserve_comments(file_path, updated_script_content)
+            updated_script_content = preserve_comments_and_docstrings(file_path, updated_script_content)
             with open(file_path, 'w') as file:
                 file.write(updated_script_content)
 
