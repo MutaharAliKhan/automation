@@ -34,56 +34,51 @@ class FillArgumentTransformer(ast.NodeTransformer):
                     node.args[0] = ast.Call(func=ast.Name(id='str', ctx=ast.Load()), args=[node.args[0]], keywords=[])
         return node
 
-def extract_parametrize_params(script_content):
-    tree = ast.parse(script_content)
-    params = []
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
-            if (isinstance(node.func.value, ast.Attribute) and
-                    isinstance(node.func.value.value, ast.Name) and
-                    node.func.value.value.id == 'pytest' and
-                    node.func.value.attr == 'mark' and
-                    node.func.attr == 'parametrize' and
-                    node.args and isinstance(node.args[0], ast.Str)):
-                param_names = node.args[0].s.split(', ')
-                params.extend(param_names)
-    return params
-
-def extract_goto_urls(script_content):
-    tree = ast.parse(script_content)
-    urls = []
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
-            if node.func.attr == 'goto' and len(node.args) == 1 and isinstance(node.args[0], ast.Str):
-                urls.append(node.args[0].s)
-    return urls
-
-def replace_hardcoded_values_with_params(script_content, params):
-    tree = ast.parse(script_content)
-    tree = ParamReplacer(params).visit(tree)
-    return astor.to_source(tree)
-
 def extract_comments(script_content):
     comments = {}
-    tokens = tokenize.tokenize(BytesIO(script_content.encode('utf-8')).readline)
+    lines = script_content.split('\n')
 
-    for token in tokens:
-        if token.type == tokenize.COMMENT:
-            comments[token.start[0] - 1] = token.line
+    in_multiline_comment = False
+    multiline_comment_lines = []
+
+    for index, line in enumerate(lines):
+        stripped_line = line.strip()
+
+        if in_multiline_comment:
+            if stripped_line.endswith("'''") or stripped_line.endswith('"""'):
+                multiline_comment_lines.append(stripped_line)
+                comments[index + 1] = '\n'.join(multiline_comment_lines)
+                in_multiline_comment = False
+                multiline_comment_lines = []
+            else:
+                multiline_comment_lines.append(stripped_line)
+        elif stripped_line.startswith("'''") or stripped_line.startswith('"""'):
+            if stripped_line.endswith("'''") or stripped_line.endswith('"""'):
+                comments[index + 1] = stripped_line
+            else:
+                multiline_comment_lines.append(stripped_line)
+                in_multiline_comment = True
+        elif stripped_line.startswith('#'):
+            comments[index + 1] = stripped_line
 
     return comments
 
-def reinsert_comments(script_content, comments):
-    lines = script_content.splitlines(keepends=True)
+def reinsert_comments(script_lines, comments):
     new_lines = []
+    comment_index = 1
 
-    for i, line in enumerate(lines):
-        # Add the comment above the relevant line if it exists
-        if i in comments:
-            new_lines.append(comments[i] + '\n')
+    for index, line in enumerate(script_lines):
+        while comment_index in comments and comment_index <= index + 1:
+            new_lines.append(comments[comment_index])
+            comment_index += 1
         new_lines.append(line)
 
-    return ''.join(new_lines)
+    # Add any remaining comments
+    while comment_index in comments:
+        new_lines.append(comments[comment_index])
+        comment_index += 1
+
+    return new_lines
 
 def transform_fill_arguments(file_path):
     try:
@@ -111,6 +106,7 @@ def process_script(file_path):
 
         # Extract comments before transformations
         comments = extract_comments(script_content)
+        script_lines = script_content.split('\n')
 
         # Extract parameters and URLs
         params = extract_parametrize_params(script_content)
@@ -122,12 +118,13 @@ def process_script(file_path):
         # Replace hardcoded values with parameters
         if params:
             updated_script_content = replace_hardcoded_values_with_params(script_content, params.copy())
+            updated_script_lines = updated_script_content.split('\n')
 
             # Reinsert comments into the updated script
-            updated_script_content = reinsert_comments(updated_script_content, comments)
+            updated_script_lines = reinsert_comments(updated_script_lines, comments)
 
             with open(file_path, 'w') as file:
-                file.write(updated_script_content)
+                file.write('\n'.join(updated_script_lines))
 
         # Transform fill arguments
         if transform_fill_arguments(file_path):
