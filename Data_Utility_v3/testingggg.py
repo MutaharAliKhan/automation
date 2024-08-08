@@ -1,8 +1,9 @@
 import ast
 import astor
 import os
-import tokenize
+import logging
 from io import BytesIO
+import tokenize
 
 class ParamReplacer(ast.NodeTransformer):
     def __init__(self, params):
@@ -80,6 +81,35 @@ def reinsert_comments(script_lines, comments):
 
     return new_lines
 
+def extract_parametrize_params(script_content):
+    tree = ast.parse(script_content)
+    params = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
+            if (isinstance(node.func.value, ast.Attribute) and
+                    isinstance(node.func.value.value, ast.Name) and
+                    node.func.value.value.id == 'pytest' and
+                    node.func.value.attr == 'mark' and
+                    node.func.attr == 'parametrize' and
+                    node.args and isinstance(node.args[0], ast.Str)):
+                param_names = node.args[0].s.split(', ')
+                params.extend(param_names)
+    return params
+
+def extract_goto_urls(script_content):
+    tree = ast.parse(script_content)
+    urls = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
+            if node.func.attr == 'goto' and len(node.args) == 1 and isinstance(node.args[0], ast.Str):
+                urls.append(node.args[0].s)
+    return urls
+
+def replace_hardcoded_values_with_params(script_content, params):
+    tree = ast.parse(script_content)
+    tree = ParamReplacer(params).visit(tree)
+    return astor.to_source(tree)
+
 def transform_fill_arguments(file_path):
     try:
         with open(file_path, 'r') as file:
@@ -147,6 +177,7 @@ def process_directory(dir_path):
     print(f"Total updated scripts count: {count}")
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.abspath(os.path.join(script_dir, '..'))
     directory_path = os.path.join(project_root, 'updated_scripts')
