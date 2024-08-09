@@ -4,7 +4,6 @@ import re
 import ast
 import astor
 import logging
-import random
 
 # Directory setup
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -67,34 +66,32 @@ def extract_fill_data(file):
 
         for line in result:
             extracted_lines_strings = extract_string_literals(line[1])
-
-            if 'get_by_text' in line[1]:
-                column_name = 'text'
-                if column_name in column_count:
-                    column_count[column_name] += 1
-                    unique_column_name = f"{column_name}{column_count[column_name]}"
-                else:
-                    column_count[column_name] = 0
-                    unique_column_name = column_name
-                value = sanitize_name(str(extracted_lines_strings[0]))
-            elif len(extracted_lines_strings) >= 2:
-                column_name = sanitize_name(str(extracted_lines_strings[0]))
-                if 'random.randint' in extracted_lines_strings[1]:
-                    value = 'random'
-                else:
-                    value = sanitize_name(str(extracted_lines_strings[1]))
-
-                if column_name in column_count:
-                    column_count[column_name] += 1
-                    unique_column_name = f"{column_name}{column_count[column_name]}"
-                else:
-                    column_count[column_name] = 0
-                    unique_column_name = column_name
-            else:
+            if len(extracted_lines_strings) < 2:
                 continue
+
+            column_name = sanitize_name(str(extracted_lines_strings[0]))
+            if 'random.randint' in extracted_lines_strings[1]:
+                value = 'random'
+            else:
+                value = sanitize_name(str(extracted_lines_strings[1]))
+
+            if column_name in column_count:
+                column_count[column_name] += 1
+                unique_column_name = f"{column_name}{column_count[column_name]}"
+            else:
+                column_count[column_name] = 0
+                unique_column_name = column_name
 
             column_list.append(unique_column_name)
             fill_data[unique_column_name] = value
+
+            # Handle page.get_by_text(value).click() values
+            if 'get_by_text' in line[1]:
+                text_value = sanitize_name(str(extracted_lines_strings[1]))
+                text_column_name = f"text{len(fill_data)}"
+                fill_data[text_column_name] = text_value
+                column_list.append(text_column_name)
+
     except Exception as e:
         logging.error(f"Error extracting fill data from {file}: {e}")
     return fill_data
@@ -102,7 +99,7 @@ def extract_fill_data(file):
 
 def save_data_to_csv(data, csv_path):
     try:
-        df = pd.DataFrame(data)
+        df = pd.DataFrame(data, index=[0])
         df.to_csv(csv_path, index=False)
         logging.info(f"Data saved to CSV at {csv_path}")
     except Exception as e:
@@ -217,7 +214,7 @@ def process_script_with_ast(script_path, updated_script_path, csv_path, script_n
 
         comments = extract_comments(script_content)
         fill_data = extract_fill_data(script_path)
-        save_data_to_csv([fill_data], csv_path)
+        save_data_to_csv(fill_data, csv_path)
 
         tree = ast.parse(script_content)
         static_code = []
@@ -259,46 +256,6 @@ def process_script_with_ast(script_path, updated_script_path, csv_path, script_n
                 "from database.database_operations import *\n"
                 "from playwright.sync_api import Page, expect\n\n\n"
                 "\n\ntest_data = read_json(r" + "'" + os.path.join(project_root, 'database',
-                                                                   'test_data.json') + "'"
-"\n\ntest_data = read_json(r" + "'" + os.path.join(project_root, 'database',
-                                                                   'test_data.json') + "'" + ")\n\n"
-
-                f"@pytest.mark.parametrize('{param_names}', {csv_data})\n"
-                "def test_" + function_name + f"({param_names}, page: Page):\n"
-                "    page.goto(base_url)\n"
-                f"    {static_code_str}\n"
-                "    page.close()\n"
-        )
-
-        with open(updated_script_path, 'w') as file:
-            file.write(updated_script_content)
-
-        logging.info(f"Updated script saved at: {updated_script_path}")
-
-    except Exception as e:
-        logging.error(f"Error processing script {script_path}: {e}")
-
-
-def main():
-    global script_count, csv_count
-    try:
-        for script_file in os.listdir(recorded_scripts_dir):
-            if script_file.endswith('.py'):
-                script_count += 1
-                script_path = os.path.join(recorded_scripts_dir, script_file)
-                csv_file_name = f'script_data_{script_count}.csv'
-                csv_path = os.path.join(updated_scripts_dir, csv_file_name)
-
-                updated_script_name = f'updated_{script_file}'
-                updated_script_path = os.path.join(updated_scripts_dir, updated_script_name)
-
-                process_script_with_ast(script_path, updated_script_path, csv_path, script_file)
-
-                csv_count += 1
-
-    except Exception as e:
-        logging.error(f"Error processing scripts in {recorded_scripts_dir}: {e}")
-
-
-if __name__ == "__main__":
-    main()
+                                                                   'test_data.json') + "'" + ")"
+                                                                                             "\n\n\ndef read_values_from_csv():\n"
+                                                                                             f"    df = pd.read_csv(r'{csv_path}')\n
