@@ -1,0 +1,31 @@
+import os
+
+def add_test_prefix_to_scripts(folder_path):
+    """
+    Add 'test_' prefix to all Python scripts in the specified folder.
+    If the script already starts with 'test_', it will be skipped.
+    
+    :param folder_path: Path to the folder containing the scripts
+    """
+    # Iterate through each file in the folder
+    for filename in os.listdir(folder_path):
+        # Check if the file is a Python script and does not already start with 'test_'
+        if filename.endswith('.py') and not filename.startswith('test_'):
+            # Construct the new filename with 'test_' prefix
+            new_filename = f'test_{filename}'
+            
+            # Get full file paths
+            old_file = os.path.join(folder_path, filename)
+            new_file = os.path.join(folder_path, new_filename)
+            
+            # Rename the file
+            os.rename(old_file, new_file)
+            print(f'Renamed: {filename} -> {new_filename}')
+        else:
+            print(f'Skipped: {filename}')
+
+    print('Finished renaming files.')
+
+# Example usage:
+# folder_path = '/path/to/your/folder'
+# add_test_prefix_to_scripts(folder_path)
