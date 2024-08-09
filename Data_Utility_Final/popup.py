@@ -7,9 +7,6 @@ def handle_popups(func):
     """
     A decorator to handle popups during test execution. This decorator continuously 
     checks for and handles popups while the wrapped function is executing.
-
-    Args:
-        func (function): The function to be decorated.
     """
     @functools.wraps(func)
     def wrapper(page: Page, *args, **kwargs):
@@ -31,8 +28,7 @@ def handle_popups(func):
         # Execute the main function
         result = func(page, *args, **kwargs)
 
-        # Optionally, you can wait for the popup handler to finish
-        # (depends on your specific needs and whether you need to ensure all popups are handled before finishing)
+        # Optionally, wait for the popup handler to finish
         handler_thread.join()
 
         return result
