@@ -10,24 +10,21 @@ def get_csv_headers(file_path):
     return headers
 
 
-def replace_fill_arguments(file_path, headers):
+def replace_arguments(file_path, headers):
     with open(file_path, 'r') as file:
         code = file.read()
 
-    # Regular expression pattern to match .fill arguments
+    # Regular expression patterns for .fill() and .get_by_text().click()
     fill_pattern = re.compile(r'\.fill\(([^)]+)\)', re.DOTALL)
+    click_pattern = re.compile(r"page\.get_by_text\(([^)]+)\)\.click\(\)", re.DOTALL)
     header_index = 0
 
-    def replace_arguments(match):
+    def replace_fill(match):
         nonlocal header_index
 
         args = match.group(1).strip()
-        if 'random.randint' in args:
-            # If 'random.randint' is present, leave it unchanged
-            return match.group(0)
-
-        if 'str(' in args:
-            # If 'str(' is already present, leave it unchanged
+        if 'random.randint' in args or 'str(' in args:
+            # If 'random.randint' or 'str(' is present, leave it unchanged
             return match.group(0)
 
         if header_index >= len(headers):
@@ -35,30 +32,15 @@ def replace_fill_arguments(file_path, headers):
 
         if ',' in args:
             first_arg, second_arg = args.split(',', 1)
-            first_arg = first_arg.strip()
             new_second_arg = f'str({headers[header_index]})'
             header_index += 1
-            return f'.fill({first_arg}, {new_second_arg})'
+            return f'.fill({first_arg.strip()}, {new_second_arg})'
         else:
             new_arg = f'str({headers[header_index]})'
             header_index += 1
             return f'.fill({new_arg})'
 
-    updated_code = fill_pattern.sub(replace_arguments, code)
-
-    with open(file_path, 'w') as file:
-        file.write(updated_code)
-
-
-def replace_click_arguments(file_path, headers):
-    with open(file_path, 'r') as file:
-        code = file.read()
-
-    # Regular expression pattern to match page.get_by_text('value').click()
-    click_pattern = re.compile(r"page\.get_by_text\(([^)]+)\)\.click\(\)", re.DOTALL)
-    header_index = 0
-
-    def replace_arguments(match):
+    def replace_click(match):
         nonlocal header_index
 
         if header_index >= len(headers):
@@ -68,7 +50,9 @@ def replace_click_arguments(file_path, headers):
         header_index += 1
         return f'page.get_by_text({new_arg}).click()'
 
-    updated_code = click_pattern.sub(replace_arguments, code)
+    # Apply replacements for .fill() and .get_by_text().click()
+    updated_code = fill_pattern.sub(replace_fill, code)
+    updated_code = click_pattern.sub(replace_click, updated_code)
 
     with open(file_path, 'w') as file:
         file.write(updated_code)
@@ -106,9 +90,8 @@ def run_replace_all():
         csv_file_path = os.path.join(directory_path, f'{base_name}.csv')
         python_file_path = os.path.join(directory_path, f'{base_name}.py')
         headers = get_csv_headers(csv_file_path)
-        
-        replace_fill_arguments(python_file_path, headers)
-        replace_click_arguments(python_file_path, headers)
+
+        replace_arguments(python_file_path, headers)
         replace_goto_calls(python_file_path)
 
         updated_scripts_count += 1
