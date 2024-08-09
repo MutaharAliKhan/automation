@@ -1,6 +1,6 @@
 from functools import wraps
 from playwright.sync_api import Page, TimeoutError as PlaywrightTimeoutError
-import time
+import threading
 
 def handle_popups(func):
     """
@@ -13,57 +13,54 @@ def handle_popups(func):
     
     @wraps(func)
     def wrapper(*args, **kwargs):
-        # Retrieve the 'page' object from kwargs, or raise an error if it's not provided
         page: Page = kwargs.get('page')
         
         if page is None:
             raise ValueError("The 'page' object must be passed as a keyword argument.")
         
+        stop_thread = False
+
         def check_and_handle_popup():
             """Function to check and handle popup if it appears."""
-            try:
-                popup_locator = page.locator('.el-message-box__message')
-                if popup_locator.is_visible(timeout=1000):  # Check with a shorter timeout
-                    message = popup_locator.text_content().strip().lower()
+            valid_messages = [
+                "unauthorized financial transactions exist for the selected account. do you want to continue?",
+                "contact compliance department",
+                "sign-on is successful. last sign-on date is",
+                "are you sure you want to sign off?"
+            ]
 
-                    valid_messages = [
-                        "unauthorized financial transactions exist for the selected account. do you want to continue?",
-                        "contact compliance department",
-                        "sign-on is successful. last sign-on date is",
-                        "are you sure you want to sign off?"
-                    ]
+            while not stop_thread:
+                try:
+                    popup_locator = page.locator('.el-message-box__message')
+                    if popup_locator.is_visible(timeout=1000):  # Check with a short timeout
+                        message = popup_locator.text_content().strip().lower()
 
-                    if message in valid_messages:
-                        print(f"Pop-up message: {message}")
-                        page.get_by_role("button", name="OK").click()
-                        page.wait_for_timeout(1000)
+                        if message in valid_messages:
+                            print(f"Pop-up message: {message}")
+                            page.get_by_role("button", name="OK").click()
+                            page.wait_for_timeout(1000)  # Wait a bit after clicking OK
+                        else:
+                            print(f"Unexpected pop-up message: {message}")
                     else:
-                        print(f"Unexpected pop-up message: {message}")
-            except PlaywrightTimeoutError:
-                pass  # No popup appeared within the short timeout
-            except Exception as e:
-                print(f"An error occurred while handling the pop-up: {str(e)}")
-        
-        # Run the function in a loop to continuously check for popups
-        result = None
-        try:
-            while True:
-                start_time = time.time()
-                
-                # Run the original function and check for popups periodically
-                result = func(*args, **kwargs)
-                
-                # Check for a popup after a short interval
-                check_and_handle_popup()
-                
-                # Break out of the loop if the function completes successfully
-                if time.time() - start_time > 10:  # Adjust this value if needed
-                    break
+                        page.wait_for_timeout(500)  # Short delay before checking again
 
-        except Exception as e:
-            print(f"Exception in the main function: {str(e)}")
-            raise
-        
+                except PlaywrightTimeoutError:
+                    continue  # No popup appeared within the short timeout
+                except Exception as e:
+                    print(f"An error occurred while handling the pop-up: {str(e)}")
+
+        # Run the popup checker in a separate thread
+        popup_thread = threading.Thread(target=check_and_handle_popup)
+        popup_thread.start()
+
+        try:
+            # Run the original function
+            result = func(*args, **kwargs)
+        finally:
+            # Stop the popup checking thread
+            stop_thread = True
+            popup_thread.join()
+
         return result
     
     return wrapper
