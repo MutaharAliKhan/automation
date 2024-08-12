@@ -1,0 +1,66 @@
+from functools import wraps
+from playwright.sync_api import Page, TimeoutError
+
+def handle_popup(func):
+    @wraps(func)
+    def wrapper(page: Page, *args, **kwargs):
+        # Create a list of methods that will be wrapped to include popup checking
+        methods_to_wrap = [
+            'goto', 'click', 'fill', 'type', 'press', 'select_option',
+            'check', 'uncheck', 'hover', 'dblclick', 'set_input_files',
+            'evaluate', 'wait_for_selector', 'wait_for_event'
+        ]
+
+        # Backup the original methods so we can restore them later
+        original_methods = {method: getattr(page, method) for method in methods_to_wrap}
+
+        def check_popup():
+            try:
+                popup_button = page.locator(".modal-body")
+                if popup_button.is_visible(timeout=5000):
+                    message = popup_button.text_content().strip().lower()
+                    valid_messages = [
+                        "this is a small modal. it has very less content",
+                        "transaction cancelled",
+                        "transaction stopped"
+                    ]
+                    for valid_message in valid_messages:
+                        if valid_message == message:
+                            print(f"Pop-up message matched: {valid_message}")
+                            page.locator("#closeSmallModal").click()
+                            break
+                    else:
+                        raise Exception(f"Unexpected pop-up message: '{message}' did not match any "
+                                        f"valid messages {valid_messages}.")
+                else:
+                    pass
+            except TimeoutError:
+                print("Timeout occurred while checking for pop-up.")
+            except Exception as e:
+                print(f"An error occurred: {e}")
+                raise e
+
+        def wrap_method(method):
+            @wraps(method)
+            def wrapped(*args, **kwargs):
+                check_popup()  # Check for pop-ups before executing the method
+                result = method(*args, **kwargs)
+                check_popup()  # Check for pop-ups after executing the method
+                return result
+            return wrapped
+
+        # Wrap all specified methods of the Page object
+        for method in methods_to_wrap:
+            setattr(page, method, wrap_method(original_methods[method]))
+
+        # Execute the original function
+        try:
+            result = func(page, *args, **kwargs)
+        finally:
+            # Restore the original methods
+            for method, original_method in original_methods.items():
+                setattr(page, method, original_method)
+
+        return result
+
+    return wrapper
