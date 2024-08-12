@@ -1,17 +1,10 @@
 from functools import wraps
 from playwright.sync_api import Page, TimeoutError
 
+
 def handle_popup(func):
     @wraps(func)
     def wrapper(page: Page, *args, **kwargs):
-        methods_to_wrap = [
-            'goto', 'click', 'fill', 'type', 'press', 'select_option',
-            'check', 'uncheck', 'hover', 'dblclick', 'set_input_files',
-            'evaluate', 'wait_for_selector', 'wait_for_event'
-        ]
-
-        original_methods = {method: getattr(page, method) for method in methods_to_wrap}
-
         def check_popup():
             try:
                 popup_button = page.locator(".modal-body")
@@ -30,32 +23,24 @@ def handle_popup(func):
                     else:
                         raise Exception(f"Unexpected pop-up message: '{message}' did not match any "
                                         f"valid messages {valid_messages}.")
-                return True  # Pop-up was detected and handled
             except TimeoutError:
                 print("Timeout occurred while checking for pop-up.")
-                return False  # No pop-up detected
             except Exception as e:
                 print(f"An error occurred: {e}")
                 raise e
 
-        def wrap_method(method):
-            @wraps(method)
-            def wrapped(*args, **kwargs):
-                result = method(*args, **kwargs)
-                popup_detected = check_popup()
-                while popup_detected:  # Keep checking for pop-ups until none are detected
-                    popup_detected = check_popup()
-                return result
-            return wrapped
+        # Replacing the original page methods with wrapped versions that check for popups
+        original_click = page.click
 
-        for method in methods_to_wrap:
-            setattr(page, method, wrap_method(original_methods[method]))
+        def wrapped_click(*args, **kwargs):
+            original_click(*args, **kwargs)
+            check_popup()
 
-        try:
-            result = func(page, *args, **kwargs)
-        finally:
-            for method, original_method in original_methods.items():
-                setattr(page, method, original_method)
+        page.click = wrapped_click
+
+        # You can similarly wrap other methods if needed, like fill, type, etc.
+
+        result = func(page, *args, **kwargs)
 
         return result
 
