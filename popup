@@ -4,14 +4,12 @@ from playwright.sync_api import Page, TimeoutError
 def handle_popup(func):
     @wraps(func)
     def wrapper(page: Page, *args, **kwargs):
-        # Create a list of methods that will be wrapped to include popup checking
         methods_to_wrap = [
             'goto', 'click', 'fill', 'type', 'press', 'select_option',
             'check', 'uncheck', 'hover', 'dblclick', 'set_input_files',
             'evaluate', 'wait_for_selector', 'wait_for_event'
         ]
 
-        # Backup the original methods so we can restore them later
         original_methods = {method: getattr(page, method) for method in methods_to_wrap}
 
         def check_popup():
@@ -32,10 +30,10 @@ def handle_popup(func):
                     else:
                         raise Exception(f"Unexpected pop-up message: '{message}' did not match any "
                                         f"valid messages {valid_messages}.")
-                else:
-                    pass
+                return True  # Pop-up was detected and handled
             except TimeoutError:
                 print("Timeout occurred while checking for pop-up.")
+                return False  # No pop-up detected
             except Exception as e:
                 print(f"An error occurred: {e}")
                 raise e
@@ -43,21 +41,19 @@ def handle_popup(func):
         def wrap_method(method):
             @wraps(method)
             def wrapped(*args, **kwargs):
-                check_popup()  # Check for pop-ups before executing the method
                 result = method(*args, **kwargs)
-                check_popup()  # Check for pop-ups after executing the method
+                popup_detected = check_popup()
+                while popup_detected:  # Keep checking for pop-ups until none are detected
+                    popup_detected = check_popup()
                 return result
             return wrapped
 
-        # Wrap all specified methods of the Page object
         for method in methods_to_wrap:
             setattr(page, method, wrap_method(original_methods[method]))
 
-        # Execute the original function
         try:
             result = func(page, *args, **kwargs)
         finally:
-            # Restore the original methods
             for method, original_method in original_methods.items():
                 setattr(page, method, original_method)
 
