@@ -1,43 +1,42 @@
 def extract_comments(script_content):
-    comments = []
+    comments = {}
     lines = script_content.split('\n')
 
     in_multiline_comment = False
     multiline_comment_lines = []
+    comment_type = None  # 'single' for #, 'triple_single' for '''...''', 'triple_double' for """..."""
 
-    for line in lines:
+    for index, line in enumerate(lines):
         stripped_line = line.strip()
 
         if in_multiline_comment:
-            multiline_comment_lines.append(line)  # Keep the original indentation
-            if stripped_line.endswith('"""') or stripped_line.endswith("'''"):
-                comments.append('\n'.join(multiline_comment_lines))
+            if comment_type == 'triple_single' and stripped_line.endswith("'''"):
+                multiline_comment_lines.append(stripped_line)
+                comments[index + 1] = '\n       '.join(multiline_comment_lines)
                 in_multiline_comment = False
                 multiline_comment_lines = []
-        elif stripped_line.startswith('"""') or stripped_line.startswith("'''"):
-            in_multiline_comment = True
-            multiline_comment_lines.append(line)  # Keep the original indentation
+            elif comment_type == 'triple_double' and stripped_line.endswith('"""'):
+                multiline_comment_lines.append(stripped_line)
+                comments[index + 1] = '\n       '.join(multiline_comment_lines)
+                in_multiline_comment = False
+                multiline_comment_lines = []
+            else:
+                multiline_comment_lines.append(stripped_line)
+        elif stripped_line.startswith("'''"):
+            if stripped_line.endswith("'''"):
+                comments[index + 1] = stripped_line
+            else:
+                multiline_comment_lines.append(stripped_line)
+                in_multiline_comment = True
+                comment_type = 'triple_single'
+        elif stripped_line.startswith('"""'):
+            if stripped_line.endswith('"""'):
+                comments[index + 1] = stripped_line
+            else:
+                multiline_comment_lines.append(stripped_line)
+                in_multiline_comment = True
+                comment_type = 'triple_double'
         elif stripped_line.startswith('#'):
-            comments.append(line)  # Keep the original indentation
+            comments[index + 1] = stripped_line
 
     return comments
-
-# Example usage
-if __name__ == "__main__":
-    # Example script content to test the function
-    script_content = """def test_script(page: Page):
-page.click()
-    \"\"\" This indentation is not correct
-Hdhddjdhdjdhdhdh
-\"\"\"
-  # click
-page.click()
-"""
-
-    # Extract comments from the script content
-    comments = extract_comments(script_content)
-
-    # Output the extracted comments with corrected indentation
-    for comment in comments:
-        print(comment)
-        print()  # Add a blank line between comments
