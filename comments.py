@@ -18,7 +18,7 @@ def extract_comments(script_content):
         elif stripped_line.startswith('"""') or stripped_line.startswith("'''"):
             in_multiline_comment = True
             start_index = index
-            multiline_comment_lines.append(line)
+            multiline_comment_lines.append(line)  # Keep original indentation
         elif stripped_line.startswith('#'):
             comments[index + 1] = line
 
