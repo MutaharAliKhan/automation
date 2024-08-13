@@ -30,7 +30,7 @@ page.click()
     \"\"\" This indentation is correct
 Hdhddjdhdjdhdhdh
 \"\"\"
-# click
+  # click
 page.click()
 """
 
@@ -40,3 +40,4 @@ page.click()
     # Output the extracted comments with correct indentation
     for comment in comments:
         print(comment)
+        print()  # Add a blank line between comments
