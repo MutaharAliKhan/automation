@@ -1,42 +1,31 @@
 def extract_comments(script_content):
-    comments = []
+    comments = {}
     lines = script_content.split('\n')
 
     in_multiline_comment = False
     multiline_comment_lines = []
-    comment_type = None  # 'triple_single' for '''...''', 'triple_double' for """..."""
+    multiline_comment_start = None
 
-    for line in lines:
+    for index, line in enumerate(lines):
         stripped_line = line.strip()
 
         if in_multiline_comment:
-            if comment_type == 'triple_single' and stripped_line.endswith("'''"):
-                multiline_comment_lines.append(line)  # Keep original formatting
-                comments.append('\n'.join(multiline_comment_lines))
+            if stripped_line.endswith("'''") or stripped_line.endswith('"""'):
+                multiline_comment_lines.append(stripped_line)
+                comments[multiline_comment_start + 1] = '\n'.join(multiline_comment_lines)
                 in_multiline_comment = False
                 multiline_comment_lines = []
-            elif comment_type == 'triple_double' and stripped_line.endswith('"""'):
-                multiline_comment_lines.append(line)  # Keep original formatting
-                comments.append('\n'.join(multiline_comment_lines))
-                in_multiline_comment = False
-                multiline_comment_lines = []
+                multiline_comment_start = None
             else:
-                multiline_comment_lines.append(line)  # Keep original formatting
-        elif stripped_line.startswith("'''"):
-            if stripped_line.endswith("'''"):
-                comments.append(line)  # Keep original formatting
+                multiline_comment_lines.append(stripped_line)
+        elif stripped_line.startswith("'''") or stripped_line.startswith('"""'):
+            if stripped_line.endswith("'''") or stripped_line.endswith('"""'):
+                comments[index + 1] = stripped_line
             else:
-                multiline_comment_lines.append(line)  # Keep original formatting
+                multiline_comment_lines.append(stripped_line)
                 in_multiline_comment = True
-                comment_type = 'triple_single'
-        elif stripped_line.startswith('"""'):
-            if stripped_line.endswith('"""'):
-                comments.append(line)  # Keep original formatting
-            else:
-                multiline_comment_lines.append(line)  # Keep original formatting
-                in_multiline_comment = True
-                comment_type = 'triple_double'
+                multiline_comment_start = index
         elif stripped_line.startswith('#'):
-            comments.append(line)  # Keep original formatting
+            comments[index + 1] = stripped_line
 
     return comments
