@@ -12,7 +12,9 @@ def extract_comments(script_content):
         if in_multiline_comment:
             if stripped_line.endswith("'''") or stripped_line.endswith('"""'):
                 multiline_comment_lines.append(stripped_line)
-                comments[multiline_comment_start + 1] = '\n'.join(multiline_comment_lines)
+                # Only add multiline comment if it started and ended properly
+                if multiline_comment_start is not None:
+                    comments[multiline_comment_start + 1] = '\n'.join(multiline_comment_lines)
                 in_multiline_comment = False
                 multiline_comment_lines = []
                 multiline_comment_start = None
