@@ -20,8 +20,7 @@ def extract_comments(script_content):
                 in_multiline_comment = True
             else:
                 comments[index + 1] = stripped_line
-        elif '#' in stripped_line:  # Handles both single-line and inline comments
-            comment_start = stripped_line.index('#')
-            comments[index + 1] = stripped_line[comment_start:].strip()
+        elif '#' in stripped_line:  # Captures the entire line if it contains a comment
+            comments[index + 1] = line
 
     return comments
