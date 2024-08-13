@@ -9,18 +9,21 @@ def extract_comments(script_content):
         stripped_line = line.strip()
 
         if in_multiline_comment:
-            multiline_comment_lines.append(stripped_line)
             if stripped_line.endswith("'''") or stripped_line.endswith('"""'):
-                comments[index + 1] = '\n       '.join(multiline_comment_lines)
+                multiline_comment_lines.append(line)
+                # Join all multiline comment lines exactly as they are
+                comments[index + 1] = '\n'.join(multiline_comment_lines).strip()
                 in_multiline_comment = False
                 multiline_comment_lines = []
-        elif stripped_line.startswith("'''") or stripped_line.startswith('"""'):
-            multiline_comment_lines.append(stripped_line)
-            if not (stripped_line.endswith("'''") or stripped_line.endswith('"""')):
-                in_multiline_comment = True
             else:
-                comments[index + 1] = stripped_line
-        elif '#' in stripped_line:  # Captures the entire line if it contains a comment
+                multiline_comment_lines.append(line)
+        elif stripped_line.startswith("'''") or stripped_line.startswith('"""'):
+            if stripped_line.endswith("'''") or stripped_line.endswith('"""'):
+                comments[index + 1] = line
+            else:
+                multiline_comment_lines.append(line)
+                in_multiline_comment = True
+        elif stripped_line.startswith('#'):
             comments[index + 1] = line
 
     return comments
