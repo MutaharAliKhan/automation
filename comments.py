@@ -9,16 +9,16 @@ def extract_comments(script_content):
         stripped_line = line.strip()
 
         if in_multiline_comment:
-            multiline_comment_lines.append(line)  # Preserve original indentation
+            multiline_comment_lines.append(line)  # Keep the original indentation
             if stripped_line.endswith('"""') or stripped_line.endswith("'''"):
                 comments.append('\n'.join(multiline_comment_lines))
                 in_multiline_comment = False
                 multiline_comment_lines = []
         elif stripped_line.startswith('"""') or stripped_line.startswith("'''"):
             in_multiline_comment = True
-            multiline_comment_lines.append(line)  # Preserve original indentation
+            multiline_comment_lines.append(line)  # Keep the original indentation
         elif stripped_line.startswith('#'):
-            comments.append(line)  # Preserve original indentation
+            comments.append(line)  # Keep the original indentation
 
     return comments
 
@@ -27,7 +27,7 @@ if __name__ == "__main__":
     # Example script content to test the function
     script_content = """def test_script(page: Page):
 page.click()
-    \"\"\" This indentation is correct
+    \"\"\" This indentation is not correct
 Hdhddjdhdjdhdhdh
 \"\"\"
   # click
@@ -37,7 +37,7 @@ page.click()
     # Extract comments from the script content
     comments = extract_comments(script_content)
 
-    # Output the extracted comments with correct indentation
+    # Output the extracted comments with corrected indentation
     for comment in comments:
         print(comment)
         print()  # Add a blank line between comments
