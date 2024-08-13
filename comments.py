@@ -21,3 +21,22 @@ def extract_comments(script_content):
             comments.append(line)  # Preserve original indentation
 
     return comments
+
+# Example usage
+if __name__ == "__main__":
+    # Example script content to test the function
+    script_content = """def test_script(page: Page):
+page.click()
+    \"\"\" This indentation is correct
+Hdhddjdhdjdhdhdh
+\"\"\"
+# click
+page.click()
+"""
+
+    # Extract comments from the script content
+    comments = extract_comments(script_content)
+
+    # Output the extracted comments with correct indentation
+    for comment in comments:
+        print(comment)
