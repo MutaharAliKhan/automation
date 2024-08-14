@@ -1,0 +1,33 @@
+2024-08-14 22:56:28,280 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\golden_scripts\InwardClearing\test_script1.py
+2024-08-14 22:56:28,284 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\system_generated_scripts\InwardClearing\test_script1.csv
+2024-08-14 22:56:28,362 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\system_generated_scripts\InwardClearing\test_script1.py
+2024-08-14 22:56:28,363 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\golden_scripts\OutwardClearing\test_script1.py
+2024-08-14 22:56:28,364 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\system_generated_scripts\OutwardClearing\test_script1.csv
+2024-08-14 22:56:28,447 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\system_generated_scripts\OutwardClearing\test_script1.py
+2024-08-14 22:56:28,448 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\golden_scripts\Paycash\test_script1.py
+2024-08-14 22:56:28,450 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\system_generated_scripts\Paycash\test_script1.csv
+2024-08-14 22:56:28,533 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\system_generated_scripts\Paycash\test_script1.py
+2024-08-14 22:56:28,534 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\golden_scripts\ReceiveDeposit\test_script4.py
+2024-08-14 22:56:28,535 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\system_generated_scripts\ReceiveDeposit\test_script4.csv
+2024-08-14 22:56:28,619 - INFO - Added method 'test_script4_data' to D:\MyRecentProjects\Data_Utility\database\database_operations.py
+2024-08-14 22:56:28,620 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\system_generated_scripts\ReceiveDeposit\test_script4.py
+2024-08-14 22:56:28,620 - INFO - Scripts have been parsed, updated, and saved successfully.
+2024-08-14 22:56:28,620 - INFO - Total scripts generated: 4
+2024-08-14 22:56:28,620 - INFO - Total CSV files generated: 4
+
+2024-08-14 22:56:44,313 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\golden_scripts\InwardClearing\test_script1.py
+2024-08-14 22:56:44,318 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\system_generated_scripts\InwardClearing\test_script1.csv
+2024-08-14 22:56:44,395 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\system_generated_scripts\InwardClearing\test_script1.py
+2024-08-14 22:56:44,396 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\golden_scripts\OutwardClearing\test_script1.py
+2024-08-14 22:56:44,397 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\system_generated_scripts\OutwardClearing\test_script1.csv
+2024-08-14 22:56:44,474 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\system_generated_scripts\OutwardClearing\test_script1.py
+2024-08-14 22:56:44,474 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\golden_scripts\Paycash\test_script1.py
+2024-08-14 22:56:44,476 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\system_generated_scripts\Paycash\test_script1.csv
+2024-08-14 22:56:44,555 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\system_generated_scripts\Paycash\test_script1.py
+2024-08-14 22:56:44,556 - INFO - Processing script: D:\MyRecentProjects\Data_Utility\golden_scripts\ReceiveDeposit\test_script4.py
+2024-08-14 22:56:44,557 - INFO - Data saved to CSV at D:\MyRecentProjects\Data_Utility\system_generated_scripts\ReceiveDeposit\test_script4.csv
+2024-08-14 22:56:44,635 - INFO - Updated script saved to D:\MyRecentProjects\Data_Utility\system_generated_scripts\ReceiveDeposit\test_script4.py
+2024-08-14 22:56:44,635 - INFO - Scripts have been parsed, updated, and saved successfully.
+2024-08-14 22:56:44,636 - INFO - Total scripts generated: 4
+2024-08-14 22:56:44,636 - INFO - Total CSV files generated: 4
+
