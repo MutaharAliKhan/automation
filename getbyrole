@@ -1,13 +1,43 @@
 import re
+import logging
 
-def extract_specific_string(code_line, target_method='get_by_text'):
-    # Pattern to match method call and its string argument
-    pattern = fr"{target_method}\((?:'|\")([^'\"]+)(?:'|\")\)"
-    match = re.search(pattern, code_line)
-    if match:
-        return match.group(1)  # Return the captured string
-    return None
+def extract_string_literals(code_line):
+    pattern = r"'(?:\\'|[^'])*'|\"(?:\\\"|[^\"])*\""
+    matches = re.findall(pattern, code_line)
+    strings = [re.sub(r"(^'|'$)|(^\"|\"$)", "", match).replace("\\'", "'").replace('\\"', '"') for match in matches]
+    return strings
 
-code_line = "page.get_by_role('listitem').get_by_text('ali').click()"
-extracted_string = extract_specific_string(code_line)
-print(extracted_string)  # Output: ali
+def extract_get_by_text(file):
+    text_data = {}
+    column_list = []
+    column_count = {}
+    try:
+        with open(file, 'r') as f:
+            lines = f.readlines()
+
+        for line_number, line in enumerate(lines, start=1):
+            if 'get_by_text' in line:
+                # Extract only the part of the line related to get_by_text
+                get_by_text_part = re.search(r"get_by_text\((.*?)\)", line)
+                if get_by_text_part:
+                    extracted_text = extract_string_literals(get_by_text_part.group(1))
+                    if len(extracted_text) < 1:
+                        continue
+
+                    column_name = 'get_by_text'
+                    value = sanitize_name(str(extracted_text[0]))
+
+                    if column_name in column_count:
+                        column_count[column_name] += 1
+                        unique_column_name = f"{column_name}{column_count[column_name]}"
+                    else:
+                        column_count[column_name] = 1
+                        unique_column_name = column_name
+
+                    column_list.append(unique_column_name)
+                    text_data[unique_column_name] = value
+
+    except Exception as e:
+        logging.error(f"Error extracting get_by_text data from {file}: {e}")
+
+    return text_data
