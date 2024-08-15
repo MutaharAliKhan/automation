@@ -1,0 +1,13 @@
+import re
+
+def extract_specific_string(code_line, target_method='get_by_text'):
+    # Pattern to match method call and its string argument
+    pattern = fr"{target_method}\((?:'|\")([^'\"]+)(?:'|\")\)"
+    match = re.search(pattern, code_line)
+    if match:
+        return match.group(1)  # Return the captured string
+    return None
+
+code_line = "page.get_by_role('listitem').get_by_text('ali').click()"
+extracted_string = extract_specific_string(code_line)
+print(extracted_string)  # Output: ali
