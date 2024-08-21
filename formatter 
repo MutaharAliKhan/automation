@@ -76,3 +76,26 @@ def replace_values_in_dict_with_multiple_variables(original_dict, replacement_di
     ) + "\n}"
     
     return formatted_result
+
+
+
+
+
+
+def replace_values_in_dict_with_multiple_variables(original_dict, replacement_dict, indent=3):
+    """
+    Replace the values of specific keys in the original dictionary with corresponding variable names,
+    and format the output with a specified indentation.
+
+    :param original_dict: The original dictionary with key-value pairs.
+    :param replacement_dict: A dictionary where keys are the keys from the original dictionary 
+                             to be replaced, and values are the new variable names to use.
+    :param indent: The number of spaces to indent the formatted dictionary.
+    :return: A formatted string representing the dictionary with the specified replacements and indentation.
+    """
+    indent_space = ' ' * indent
+    formatted_result = "{\n" + ",\n".join(
+        [f"{indent_space}'{k}': {replacement_dict[k]}" if k in replacement_dict else f"{indent_space}'{k}': '{v}'" for k, v in original_dict.items()]
+    ) + "\n}"
+    
+    return formatted_result
