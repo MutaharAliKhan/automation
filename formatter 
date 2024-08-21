@@ -57,3 +57,22 @@ replacement_dict = {
 formatted_dict = replace_values_in_dict_with_multiple_variables(original_dict, replacement_dict)
 
 print(formatted_dict)
+
+
+
+
+def replace_values_in_dict_with_multiple_variables(original_dict, replacement_dict):
+    """
+    Replace the values of specific keys in the original dictionary with corresponding variable names.
+
+    :param original_dict: The original dictionary with key-value pairs.
+    :param replacement_dict: A dictionary where keys are the keys from the original dictionary 
+                             to be replaced, and values are the new variable names to use.
+    :return: A formatted string representing the dictionary with the specified replacements.
+    """
+    # Create the formatted dictionary output
+    formatted_result = "{\n" + ",\n".join(
+        [f"'{k}': {replacement_dict[k]}" if k in replacement_dict else f"'{k}': '{v}'" for k, v in original_dict.items()]
+    ) + "\n}"
+    
+    return formatted_result
