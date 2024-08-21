@@ -1,0 +1,135 @@
+import ast
+import csv
+import re
+from collections import defaultdict
+
+def extract_page_lines(script_content):
+    tree = ast.parse(script_content)
+    all_lines = []
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Expr) or isinstance(node, ast.Assign):
+            code_line = ast.get_source_segment(script_content, node)
+            all_lines.append((node.lineno, code_line.strip()))
+
+    return all_lines
+
+def sanitize_locator(name):
+    name = (name.replace("data-e2e", "").replace("data-test", "")
+            .replace("input", "").replace("type", ""))
+    name = re.sub(r'[^a-zA-Z0-9_]', '', name)
+    return name
+
+def extract_and_replace_fill_values(script_content):
+    class FillAndGetByTextVisitor(ast.NodeVisitor):
+        def __init__(self):
+            self.fill_lines = []
+            self.get_by_text_lines = []
+            self.values = []
+            self.locators = []
+            self.updated_fill_lines = []
+            self.updated_get_by_text_lines = []
+            self.locator_count = defaultdict(int)
+
+        def visit_Call(self, node):
+            if isinstance(node.func, ast.Attribute):
+                method_name = node.func.attr
+                locator_node = node.func.value
+
+                if method_name == 'fill':
+                    # Skip fill operations with get_by_text
+                    if isinstance(locator_node, ast.Call) and hasattr(locator_node.func, 'attr') and locator_node.func.attr == 'get_by_text':
+                        return
+
+                    value_node = node.args[1] if len(node.args) == 2 else node.args[0] if node.args else None
+
+                    if value_node and isinstance(value_node, ast.Str):
+                        fill_value = value_node.s
+
+                        if isinstance(locator_node, ast.Call):
+                            locator_str = ast.get_source_segment(script_content, node.func.value.args[0])
+                        else:
+                            locator_str = ast.get_source_segment(script_content, node.args[0])
+
+                        sanitized_locator = sanitize_locator(locator_str)
+                        self.locator_count[sanitized_locator] += 1
+
+                        if self.locator_count[sanitized_locator] > 1:
+                            sanitized_locator = f"{sanitized_locator}{self.locator_count[sanitized_locator] - 1}"
+
+                        self.values.append(fill_value)
+                        self.locators.append(sanitized_locator)
+
+                        updated_line = ast.get_source_segment(script_content, node)
+                        updated_line = updated_line.replace(f"'{fill_value}'", f'str({sanitized_locator})')
+                        updated_line = updated_line.replace(f'"{fill_value}"', f'str({sanitized_locator})')
+
+                        self.fill_lines.append((node.lineno, updated_line))
+                        self.updated_fill_lines.append((node.lineno, updated_line))
+
+                elif method_name == 'get_by_text':
+                    value_node = node.args[0] if node.args else None
+                    if value_node and isinstance(value_node, ast.Str):
+                        get_text_value = value_node.s
+
+                        occurrence_index = self.locator_count['get_text_value']
+                        variable_name = f'get_text_value{occurrence_index}' if occurrence_index > 0 else 'get_text_value'
+                        self.locator_count['get_text_value'] += 1
+
+                        self.values.append(get_text_value)
+                        self.locators.append(variable_name)
+
+                        full_line = script_content.splitlines()[node.lineno - 1].strip()
+                        updated_line = full_line.replace(f"'{get_text_value}'", f'str({variable_name})')
+                        updated_line = updated_line.replace(f'"{get_text_value}"', f'str({variable_name})')
+
+                        self.get_by_text_lines.append((node.lineno, updated_line))
+                        self.updated_get_by_text_lines.append((node.lineno, updated_line))
+
+            self.generic_visit(node)
+
+    tree = ast.parse(script_content)
+    visitor = FillAndGetByTextVisitor()
+    visitor.visit(tree)
+
+    return visitor.fill_lines, visitor.get_by_text_lines, visitor.values, visitor.locators, visitor.updated_fill_lines, visitor.updated_get_by_text_lines
+
+def create_csv_file(locators, values, csv_filename='locators_values.csv'):
+    with open(csv_filename, 'w', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=locators)
+        writer.writeheader()
+        writer.writerow(dict(zip(locators, values)))
+
+def generate_updated_script(original_lines, updated_lines):
+    updated_lines_dict = dict(updated_lines)
+    original_lines_dict = dict(original_lines)
+    all_lines = {**original_lines_dict, **updated_lines_dict}
+    sorted_lines = [all_lines[lineno] for lineno in sorted(all_lines)]
+
+    return '\n    '.join(sorted_lines)
+
+script_path = 'script.py'
+with open(script_path, 'r') as file:
+    script_content = file.read()
+
+all_lines = extract_page_lines(script_content)
+fill_lines, get_by_text_lines, values, locators, updated_fill_lines, updated_get_by_text_lines = extract_and_replace_fill_values(script_content)
+
+create_csv_file(locators, values)
+
+# Combine fill and get_by_text lines for the final script
+updated_script = generate_updated_script(all_lines, updated_fill_lines + updated_get_by_text_lines)
+params = ', '.join(locators)
+
+updated_script_content = f"""import pytest
+import random
+from playwright.sync_api import expect
+from playwright.sync_api._generated import Page
+
+@pytest.mark.parametrize('{params}', csv_data)
+def test_script(page: Page, {params}, base_url) -> None:
+    {updated_script}
+"""
+
+with open('updated_script.py', 'w') as file:
+    file.write(updated_script_content)
