@@ -1,0 +1,9 @@
+headers = ["username", "password"]
+values = ["testing", "testing123"]
+
+# Creating the dictionary
+result = {header: value for header, value in zip(headers, values)}
+
+# Manually formatting the dictionary output
+formatted_result = "{\n" + ",\n".join([f"'{k}': '{v}'" for k, v in result.items()]) + "\n}"
+print(formatted_result)
