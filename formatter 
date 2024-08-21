@@ -7,3 +7,22 @@ result = {header: value for header, value in zip(headers, values)}
 # Manually formatting the dictionary output
 formatted_result = "{\n" + ",\n".join([f"'{k}': '{v}'" for k, v in result.items()]) + "\n}"
 print(formatted_result)
+
+
+
+
+def replace_values_in_dict(original_dict, keys_to_replace, variable_name):
+    """
+    Replace the values of specific keys in the dictionary with a variable name.
+
+    :param original_dict: The original dictionary with key-value pairs.
+    :param keys_to_replace: A list of keys whose values should be replaced with the variable name.
+    :param variable_name: The name of the variable to replace the values with.
+    :return: A formatted string representing the dictionary with the specified replacements.
+    """
+    # Create the formatted dictionary output
+    formatted_result = "{\n" + ",\n".join(
+        [f"'{k}': {variable_name}" if k in keys_to_replace else f"'{k}': '{v}'" for k, v in original_dict.items()]
+    ) + "\n}"
+    
+    return formatted_result
