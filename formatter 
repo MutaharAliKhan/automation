@@ -26,3 +26,34 @@ def replace_values_in_dict(original_dict, keys_to_replace, variable_name):
     ) + "\n}"
     
     return formatted_result
+
+
+
+
+
+original_dict = {
+    'username': 'testing',
+    'password': 'testing123',
+    'email': 'test@example.com',
+    'phone': '1234567890',
+    'address': '123 Main St',
+    'city': 'Testville',
+    'state': 'TS',
+    'zip': '12345',
+    'country': 'Testland',
+    'company': 'TestCorp'
+}
+
+# Dictionary mapping keys to new variable names
+replacement_dict = {
+    'username': 'abc',
+    'email': 'xyz',
+    'phone': 'pqr',
+    'zip': 'uvw',
+    'country': 'lmn'
+}
+
+# Call the method
+formatted_dict = replace_values_in_dict_with_multiple_variables(original_dict, replacement_dict)
+
+print(formatted_dict)
