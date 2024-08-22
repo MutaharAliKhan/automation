@@ -5,10 +5,6 @@ def replace_arguments(file_path, headers):
         with open(file_path, 'r') as file:
             lines = file.readlines()
 
-        # Filter out lines that start with 'expect('
-        filtered_lines = [line for line in lines if not line.strip().startswith('expect(')]
-        code = ''.join(filtered_lines)
-
         fill_pattern = re.compile(r'\.fill\(([^)]+)\)', re.DOTALL)
         click_pattern = re.compile(r"get_by_text\(([^)]+)\)", re.DOTALL)
         filter_pattern = re.compile(r'filter\(has_text="?([^",)]+)"?\)', re.DOTALL)
@@ -55,8 +51,20 @@ def replace_arguments(file_path, headers):
             header_index += 1
             return f'filter(has_text={new_has_text_value})'
 
-        updated_code = fill_pattern.sub(replace_fill, code)
-        updated_code = click_pattern.sub(replace_click, updated_code)
-        updated_code = filter_pattern.sub(replace_filter, updated_code)
+        updated_code_lines = []
+        for line in lines:
+            if 'expect(' in line and 'get_by_text' in line:
+                # Skip replacing get_by_text within expect statements
+                updated_code_lines.append(line)
+            else:
+                updated_line = fill_pattern.sub(replace_fill, line)
+                updated_line = click_pattern.sub(replace_click, updated_line)
+                updated_line = filter_pattern.sub(replace_filter, updated_line)
+                updated_code_lines.append(updated_line)
+
+        updated_code = ''.join(updated_code_lines)
 
         with open(file_path, 'w') as file:
+            file.write(updated_code)
+    except Exception as e:
+        print(f"Error processing file {file_path}: {e}")
