@@ -1,0 +1,25 @@
+Assuming get_python_files() returns a list of tuples with (file_path, file_name)
+py_files = get_python_files(source_dir)
+
+for file_path, file in py_files:
+    # Compute relative paths and filenames
+    relative_path = os.path.relpath(file_path, source_dir)
+    script_name = os.path.splitext(file)[0]
+    
+    # Paths for updated script and CSV file
+    updated_script_path = os.path.join(destination_dir, relative_path)
+    csv_filename = f"{script_name}.csv"
+    csv_path = os.path.join(destination_dir, os.path.dirname(relative_path), csv_filename)
+
+    # Use pathlib for directory operations
+    updated_script_dir = Path(updated_script_path).parent
+    csv_dir = Path(csv_path).parent
+
+    # Avoid redundant directory creation
+    if not updated_script_dir.exists():
+        updated_script_dir.mkdir(parents=True, exist_ok=True)
+
+    if not csv_dir.exists():
+        csv_dir.mkdir(parents=True, exist_ok=True)
+
+    # Continue with other file operations as necessary
